@@ -1,0 +1,24 @@
+services:
+  p-stream:
+    build:
+      context: .
+      args:
+        - META_NAME=${META_NAME}
+        - META_DESCRIPTION=${META_DESCRIPTION}
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?database URL required}
+      META_NAME: ${META_NAME}
+      META_DESCRIPTION: ${META_DESCRIPTION}
+      CRYPTO_SECRET: ${CRYPTO_SECRET:?crypto secret required}
+      TMDB_API_KEY: ${TMDB_API_KEY:?TMDB API key required}
+      TRAKT_CLIENT_ID: ${TRAKT_CLIENT_ID:?Trakt client ID required}
+      TRAKT_SECRET_ID: ${TRAKT_SECRET_ID:?Trakt secret ID required}
+      CAPTCHA: ${CAPTCHA}
+      CAPTCHA_CLIENT_KEY: ${CAPTCHA_CLIENT_KEY}
+      NODE_ENV: ${NODE_ENV:-production}
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    depends_on: []
