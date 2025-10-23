@@ -1,5 +1,4 @@
 # BackendV2
-follow me on [GitHub](https://github.com/FifthWit)
 
 BackendV2 is a from scratch rewrite of movie-web's backend using [Nitro](https://nitro.build), and [Prisma](https://prisma.io). 
 
@@ -108,5 +107,3 @@ Here is a general rule of thumb for what your changes and developments should lo
 - Use Prettier & ESLint: We aren't going to be crazy if it's not well formatted but by using the extensions it keeps our code consistent, which makes it a lot easier for maintainers to help merge your code
 - Keep it minimal, things like Email are out of the question, we want to keep it small, if you think that it's **really** needed, make an issue on our GitHub to express your interest in it, and a maintainer will confirm or deny whether we would merge it
 - Understand our tech stack, this is a generic piece of advice but if you haven't use NitroJS for example, read their docs and make sure you're familiar with the framework, it makes your code quality much better, and makes reviewing much easier
-
-Star this repo and please follow me on [GitHub](https://github.com/FifthWit)!
