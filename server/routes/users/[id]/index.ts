@@ -9,8 +9,7 @@ const userProfileSchema = z.object({
     icon: z.string(),
     colorA: z.string(),
     colorB: z.string(),
-  }).optional(),
-  nickname: z.string().min(1).max(255).optional(),
+  }),
 });
 
 export default defineEventHandler(async event => {
@@ -32,17 +31,11 @@ export default defineEventHandler(async event => {
 
       const validatedBody = userProfileSchema.parse(body);
 
-      const updateData: any = {};
-      if (validatedBody.profile) {
-        updateData.profile = validatedBody.profile;
-      }
-      if (validatedBody.nickname !== undefined) {
-        updateData.nickname = validatedBody.nickname;
-      }
-
       const user = await prisma.users.update({
         where: { id: userId },
-        data: updateData,
+        data: {
+          profile: validatedBody.profile,
+        },
       });
 
       log.info('User profile updated successfully', { userId });
@@ -51,7 +44,6 @@ export default defineEventHandler(async event => {
         id: user.id,
         publicKey: user.public_key,
         namespace: user.namespace,
-        nickname: (user as any).nickname,
         profile: user.profile,
         permissions: user.permissions,
         createdAt: user.created_at,
