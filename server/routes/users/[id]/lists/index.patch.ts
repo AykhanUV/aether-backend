@@ -1,6 +1,8 @@
 import { useAuth } from '#imports';
+import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
-import { prisma } from '#imports';
+
+const prisma = new PrismaClient();
 
 const listItemSchema = z.object({
   tmdb_id: z.string(),
