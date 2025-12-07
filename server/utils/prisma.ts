@@ -3,9 +3,6 @@ import { PrismaClient } from '../../generated/client';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
 });
 
 const globalForPrisma = globalThis as unknown as {
