@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { useChallenge } from '~/utils/challenge';
 import { useAuth } from '~/utils/auth';
 import { randomUUID } from 'crypto';
-import { generateRandomNickname } from '~/utils/nickname';
 
 const completeSchema = z.object({
   publicKey: z.string(),
@@ -52,19 +51,17 @@ export default defineEventHandler(async event => {
 
   const userId = randomUUID();
   const now = new Date();
-  const nickname = generateRandomNickname();
 
   const user = await prisma.users.create({
     data: {
       id: userId,
       namespace: body.namespace,
       public_key: body.publicKey,
-      nickname,
       created_at: now,
       last_logged_in: now,
       permissions: [],
       profile: body.profile,
-    } as any,
+    },
   });
 
   const auth = useAuth();
@@ -77,7 +74,6 @@ export default defineEventHandler(async event => {
       id: user.id,
       publicKey: user.public_key,
       namespace: user.namespace,
-      nickname: (user as any).nickname,
       profile: user.profile,
       permissions: user.permissions,
     },
