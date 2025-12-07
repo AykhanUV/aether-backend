@@ -1,15 +1,15 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../../generated/client';
-import { Pool } from 'pg';
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+// Modify DATABASE_URL to disable SSL certificate verification for Aiven
+let databaseUrl = process.env.DATABASE_URL || '';
+if (!databaseUrl.includes('sslmode=')) {
+  databaseUrl += (databaseUrl.includes('?') ? '&' : '?') + 'sslmode=no-verify';
+}
+
+const adapter = new PrismaPg({
+  connectionString: databaseUrl,
 });
-
-const adapter = new PrismaPg(pool);
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
